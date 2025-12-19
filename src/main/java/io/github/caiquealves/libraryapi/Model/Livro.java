@@ -3,6 +3,7 @@ package io.github.caiquealves.libraryapi.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -28,7 +29,7 @@ public class Livro {
     private GeneroLivro genero;
 
     @Column(name= "preco", precision = 18, scale = 2)
-    private double preco;
+    private BigDecimal preco;
 
     //Relacionamento com autor
     @ManyToOne //primeiro refere-se a classe atual(Livro) a segunda refere-se a outra classe(Autor)
