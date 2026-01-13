@@ -1,14 +1,16 @@
-package io.github.caiquealves.libraryapi.Model;
+package io.github.caiquealves.libraryapi.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name = "livro")
 @Data
+@ToString(exclude = "autor")
 public class Livro {
     @Id
     @Column(name= "id")
@@ -21,8 +23,8 @@ public class Livro {
     @Column(name= "titulo", length = 150, nullable = false)
     private String titulo;
 
-    @Column(name= "data_publicacao")
-    private String dataPublicacao;
+    @Column(name= "data_publicacao", columnDefinition = "DATE")
+    private LocalDate dataPublicacao;
 
     @Enumerated(EnumType.STRING)
     @Column(name= "genero", length = 30, nullable = false)
@@ -32,7 +34,7 @@ public class Livro {
     private BigDecimal preco;
 
     //Relacionamento com autor
-    @ManyToOne //primeiro refere-se a classe atual(Livro) a segunda refere-se a outra classe(Autor)
+    @ManyToOne(fetch =  FetchType.LAZY)//(cascade = CascadeType.ALL)//primeiro refere-se a classe atual(Livro) a segunda refere-se a outra classe(Autor)
     @JoinColumn(name= "id_autor")
     private Autor autor;
 }

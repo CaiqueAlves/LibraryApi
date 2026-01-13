@@ -1,6 +1,6 @@
 package io.github.caiquealves.libraryapi.repository;
 
-import io.github.caiquealves.libraryapi.Model.Autor;
+import io.github.caiquealves.libraryapi.model.Autor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
