@@ -134,4 +134,28 @@ class LivroRepositoryTest {
         List<Livro> lista = livroRepository.findByTituloAndPreco("O roubo do banco assombrado", preco);
         lista.forEach(System.out::println);
     }
+
+    @Test
+    void listarLivrosComQueryJPQL(){
+        var resultado = livroRepository.ListarTodosOrdenadoPorTituloEPreco();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void ListarAutoresDosLivros(){
+        var resultado = livroRepository.ListarAutoresDosLivros();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void listarNomesDiferentesLivros(){
+        var resultado = livroRepository.listarNomesDiferentesLivros();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void listarGenerosDeLivrosAutoresBrasileiros(){
+        var resultado = livroRepository.ListarGenerosAutoresBrasileiros();
+        resultado.forEach(System.out::println);
+    }
 }

@@ -29,6 +29,6 @@ public class Autor {
     private String nacionalidade;
 
     //@Transient
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livro> Livos;
 }
