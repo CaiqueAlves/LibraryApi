@@ -12,29 +12,32 @@ import java.util.UUID;
 @Data
 @ToString(exclude = "autor")
 public class Livro {
+
     @Id
-    @Column(name= "id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name= "isbn", length = 20, nullable = false)
+    @Column(name = "isbn", length = 20, nullable = false)
     private String isbn;
 
-    @Column(name= "titulo", length = 150, nullable = false)
+    @Column(name = "titulo", length = 150, nullable = false)
     private String titulo;
 
-    @Column(name= "data_publicacao", columnDefinition = "DATE")
+    @Column(name = "data_publicacao")
     private LocalDate dataPublicacao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name= "genero", length = 30, nullable = false)
+    @Column(name = "genero", length = 30, nullable = false)
     private GeneroLivro genero;
 
-    @Column(name= "preco", precision = 18, scale = 2)
+    @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    //Relacionamento com autor
-    @ManyToOne(fetch =  FetchType.LAZY)//(cascade = CascadeType.ALL)//primeiro refere-se a classe atual(Livro) a segunda refere-se a outra classe(Autor)
-    @JoinColumn(name= "id_autor")
+    @ManyToOne(
+                //cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "id_autor")
     private Autor autor;
 }

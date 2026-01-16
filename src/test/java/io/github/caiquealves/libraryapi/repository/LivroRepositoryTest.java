@@ -25,14 +25,14 @@ class LivroRepositoryTest {
     @Test
     void salvarTest(){
         Livro livro = new Livro();
-        livro.setIsbn("90887-84874");
-        livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("Outro Livro");
-        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
+        livro.setIsbn("90887-84875");
+        livro.setPreco(BigDecimal.valueOf(357.99));
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("Vacinas o risco de apressar");
+        livro.setDataPublicacao(LocalDate.of(2023, 2, 25));
 
         Autor autor = autorRepository
-                .findById(UUID.fromString("eb1dad13-76f8-4169-ac50-069e6e194c82"))
+                .findById(UUID.fromString("2e89840d-40fa-46a4-a895-a134c3bea8ef"))
                 .orElse(null);
 
         livro.setAutor(autor);
@@ -43,16 +43,16 @@ class LivroRepositoryTest {
     @Test
     void salvarAutorELivroTest(){
         Livro livro = new Livro();
-        livro.setIsbn("90887-84874");
+        livro.setIsbn("90887-84875");
         livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("Terceiro Livro");
-        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("Vacinas o risco de apressar");
+        livro.setDataPublicacao(LocalDate.of(2023, 03, 27));
 
         Autor autor = new Autor();
-        autor.setNome("José");
+        autor.setNome("Vinicius aguiar");
         autor.setNacionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1951, 1, 31));
+        autor.setDataNascimento(LocalDate.of(1984, 5, 23));
 
         autorRepository.save(autor);
 
@@ -64,16 +64,16 @@ class LivroRepositoryTest {
     @Test
     void salvarCascadeTest(){
         Livro livro = new Livro();
-        livro.setIsbn("90887-84874");
-        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setIsbn("90887-84875");
+        livro.setPreco(BigDecimal.valueOf(250));
         livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("Outro Livro");
-        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
+        livro.setTitulo("Vacinas, obrigatórias ou não");
+        livro.setDataPublicacao(LocalDate.of(2023, 5, 23));
 
         Autor autor = new Autor();
-        autor.setNome("João");
+        autor.setNome("Vinicius aguiar");
         autor.setNacionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1951, 1, 31));
+        autor.setDataNascimento(LocalDate.of(1984, 5, 23));
 
         livro.setAutor(autor);
 
@@ -169,5 +169,15 @@ class LivroRepositoryTest {
     void listarGenerosPositionalParamTest(){
         var resultado = livroRepository.findByGenero(GeneroLivro.MISTERIO, "preco");
         resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void deletarPorGeneroTest(){
+       livroRepository.deleteByGenero(GeneroLivro.CIENCIA);
+    }
+
+    @Test
+    void updateDataPublicacaoTest(){
+        livroRepository.updateDataPublicacao(LocalDate.of(2000, 01, 01));
     }
 }
