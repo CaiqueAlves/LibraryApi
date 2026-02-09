@@ -3,10 +3,6 @@ package io.github.caiquealves.libraryapi.controller;
 import io.github.caiquealves.libraryapi.controller.dto.AutorDTO;
 import io.github.caiquealves.libraryapi.model.Autor;
 import io.github.caiquealves.libraryapi.service.AutorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -50,5 +46,16 @@ public class AutorController {
             return ResponseEntity.ok(dto);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletar(@PathVariable String id){
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = service.obterPorId(idAutor);
+        if(autorOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        service.deletar(autorOptional.get());
+        return ResponseEntity.noContent().build();
     }
 }
