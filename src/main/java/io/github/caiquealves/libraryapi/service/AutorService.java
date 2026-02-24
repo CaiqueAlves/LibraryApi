@@ -20,6 +20,13 @@ public class AutorService {
         return repository.save(autor);
     }
 
+    public void atualizar(Autor autor) {
+        if (autor.getId()== null) {
+            throw new IllegalArgumentException("Necessario informar o autor cadastrado na base de dados");
+        }
+        repository.save(autor);
+    }
+
     public Optional<Autor> obterPorId(UUID id) {
         return repository.findById(id);
     }
