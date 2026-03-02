@@ -32,7 +32,7 @@ class LivroRepositoryTest {
         livro.setDataPublicacao(LocalDate.of(2023, 2, 25));
 
         Autor autor = autorRepository
-                .findById(UUID.fromString("2e89840d-40fa-46a4-a895-a134c3bea8ef"))
+                .findById(UUID.fromString("11516b2f-31cb-4e07-83ee-6db693ab97d0"))
                 .orElse(null);
 
         livro.setAutor(autor);
