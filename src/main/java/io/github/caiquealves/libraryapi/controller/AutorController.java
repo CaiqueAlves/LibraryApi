@@ -6,6 +6,7 @@ import io.github.caiquealves.libraryapi.exceptions.OperacaoNaoPermitidaException
 import io.github.caiquealves.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.caiquealves.libraryapi.model.Autor;
 import io.github.caiquealves.libraryapi.service.AutorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.apache.bcel.generic.ObjectType;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,9 @@ import java.util.stream.Collectors;
 public class AutorController {
 
     private final AutorService service;
-    
+
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) {
         try {
             Autor autorEntidade = autor.mapearPorAutor();
             service.salvar(autorEntidade);
