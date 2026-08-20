@@ -1,6 +1,5 @@
 package io.github.caiquealves.libraryapi.controller.dto;
 
-import io.github.caiquealves.libraryapi.model.Autor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -24,12 +23,4 @@ public record AutorDTO(
         @Size(min = 2, max = 100, message = "Campo fora do tamanho padrão")
         String nacionalidade) {
 
-
-    public Autor mapearPorAutor() {
-        Autor autor = new Autor();
-        autor.setNome(nome);
-        autor.setDataNascimento(dataNascimento);
-        autor.setNacionalidade(nacionalidade);
-        return autor;
-    }
 }
