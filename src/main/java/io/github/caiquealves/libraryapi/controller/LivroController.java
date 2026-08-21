@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/livros")
 //http://localhost:8080/livros
 @RequiredArgsConstructor
-public class LivroController {
+public class LivroController implements GenericController{
 
     private final LivroService service;
     private final LivroMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object>salvarLivro(@RequestBody @Valid CadastroLivroDTO  dto){
+    public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO  dto){
         try{
             Livro livro = mapper.toEntity(dto);
             service.salvar(livro);
-            return ResponseEntity.ok(livro);
+            var url = gerarHeaderLocation(livro.getId());
+            return ResponseEntity.created(url).build();
         }catch (RegistroDuplicadoException e){
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);
