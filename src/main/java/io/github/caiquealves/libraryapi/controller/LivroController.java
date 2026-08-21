@@ -2,6 +2,7 @@ package io.github.caiquealves.libraryapi.controller;
 
 import io.github.caiquealves.libraryapi.controller.dto.CadastroLivroDTO;
 import io.github.caiquealves.libraryapi.controller.dto.ErroResposta;
+import io.github.caiquealves.libraryapi.controller.mappers.LivroMapper;
 import io.github.caiquealves.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.caiquealves.libraryapi.model.Livro;
 import io.github.caiquealves.libraryapi.service.LivroService;
@@ -19,12 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LivroController {
 
-    private final LivroService livroService;
+    private final LivroService service;
+    private final LivroMapper mapper;
 
     @PostMapping
     public ResponseEntity<Object>salvarLivro(@RequestBody @Valid CadastroLivroDTO  dto){
         try{
-            return ResponseEntity.ok(dto);
+            Livro livro = mapper.toEntity(dto);
+            service.salvar(livro);
+            return ResponseEntity.ok(livro);
         }catch (RegistroDuplicadoException e){
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);
