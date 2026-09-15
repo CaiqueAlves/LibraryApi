@@ -47,7 +47,17 @@ public class LivroService {
         if(anoPublicacao != null){
             specs = specs.and(anoPublicacaoEqual(anoPublicacao));
         }
+        if(nomeAutor != null){
+            specs = specs.and(nomeAutorLike(nomeAutor));
+        }
 
         return repository.findAll(specs);
+    }
+
+    public void atualizar(Livro livro) {
+        if(livro.getId() == null){
+            throw new IllegalArgumentException("Necessario informar um livro cadastrado na base de dados");
+        }
+        repository.save(livro);
     }
 }
