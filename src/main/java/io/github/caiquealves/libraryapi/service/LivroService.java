@@ -4,6 +4,7 @@ import io.github.caiquealves.libraryapi.model.GeneroLivro;
 import io.github.caiquealves.libraryapi.model.Livro;
 import io.github.caiquealves.libraryapi.repository.LivroRepository;
 import io.github.caiquealves.libraryapi.repository.specs.LivroSpecs.*;
+import io.github.caiquealves.libraryapi.validador.LivroValidador;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,10 @@ import static io.github.caiquealves.libraryapi.repository.specs.LivroSpecs.*;
 @RequiredArgsConstructor
 public class LivroService {
     private final LivroRepository repository;
+    private final LivroValidador validator;
 
     public Livro salvar(Livro livro) {
+        validator.validar(livro);
         return repository.save(livro);
     }
 
@@ -58,6 +61,8 @@ public class LivroService {
         if(livro.getId() == null){
             throw new IllegalArgumentException("Necessario informar um livro cadastrado na base de dados");
         }
+
+        validator.validar(livro);
         repository.save(livro);
     }
 }
