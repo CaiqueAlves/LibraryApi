@@ -2,6 +2,7 @@ package io.github.caiquealves.libraryapi.controller.common;
 
 import io.github.caiquealves.libraryapi.controller.dto.ErroCampo;
 import io.github.caiquealves.libraryapi.controller.dto.ErroResposta;
+import io.github.caiquealves.libraryapi.exceptions.CampoInvalidoException;
 import io.github.caiquealves.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.caiquealves.libraryapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,15 @@ public class GlobalExceptionHandler {
         return ErroResposta.conflito(e.getMessage());
     }
 
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErroResposta handleCampoInvalidoException(CampoInvalidoException e){
+        return new ErroResposta(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "Erro de validação.",
+                List.of(new ErroCampo(e.getCampo(), e.getMessage())));
+    }
+    
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErroResposta handleErrosNaoTratados(RuntimeException e){
